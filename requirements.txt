@@ -1,0 +1,8 @@
+# Dependencies for AutoSchema & API Auditor
+# Note: The agent is built with standard library fallbacks (zero required dependencies),
+# but installing these packages provides enhanced features and official SDK support.
+
+requests>=2.31.0
+python-dotenv>=1.0.0
+openai>=1.30.0
+tavily-python>=0.3.0
