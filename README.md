@@ -48,10 +48,11 @@ C:\rustaman\autoschema-api-auditor\
 ├── config.py                    # Loader konfigurasi & parameter agen
 ├── system_prompt.py             # Master System Prompt teroptimasi
 ├── tools.py                     # Skema OpenAI Tool & Tavily Search executor
+├── app.py                       # Antarmuka Web Interaktif (Streamlit)
 ├── agent.py                     # ReAct loop engine (Nebius / OpenAI-compatible)
 ├── cli.py                       # Antarmuka CLI interaktif
 ├── run_demo.py                  # Runner verifikasi otomatis end-to-end
-├── requirements.txt             # Dependensi opsional/eksternal
+├── requirements.txt             # Dependensi proyek
 ├── sample_inputs/               # Berkas uji dengan kerentanan realistis
 │   ├── ecommerce_schema.sql     # Skema SQL dengan unindexed FK, plaintext secret, missing RLS
 │   └── order_controller.ts      # Controller dengan SQL Injection, BOLA, dan N+1 query
@@ -89,6 +90,16 @@ python cli.py audit --file sample_inputs/order_controller.ts --output my_report.
 # Melihat Master System Prompt yang aktif
 python cli.py prompt
 ```
+
+---
+
+### 3. Menjalankan Antarmuka Web (Streamlit UI)
+
+```bash
+# Menjalankan Web UI di browser
+streamlit run app.py
+```
+Akses web UI melalui browser di `http://localhost:8501`. Web UI mendukung upload file, pemilihan mode *Live Nebius* vs *Simulation*, real-time progress tracing, dan tombol unduh laporan `.md`.
 
 ---
 
