@@ -22,7 +22,10 @@ def load_dotenv_fallback(dotenv_path: str = ".env"):
             if key not in os.environ:
                 os.environ[key] = val
 
-# Try loading from .env
+# Try loading from .env in cli/ or repo root
+BASE_DIR = Path(__file__).parent.resolve()
+load_dotenv_fallback(str(BASE_DIR / ".env"))
+load_dotenv_fallback(str(BASE_DIR.parent / ".env"))
 load_dotenv_fallback()
 
 class Config:
@@ -41,7 +44,7 @@ class Config:
     DEFAULT_DATABASE_DIALECT = os.getenv("DEFAULT_DATABASE_DIALECT", "PostgreSQL 16")
 
     # Output directory for audit reports
-    REPORTS_DIR = os.getenv("REPORTS_DIR", "reports")
+    REPORTS_DIR = os.getenv("REPORTS_DIR", str(BASE_DIR / "reports"))
 
     @classmethod
     def is_nebius_configured(cls) -> bool:

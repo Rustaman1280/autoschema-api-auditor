@@ -8,6 +8,12 @@ import sys
 import os
 import argparse
 from pathlib import Path
+
+# Ensure cli directory is on sys.path
+BASE_DIR = Path(__file__).parent.resolve()
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
 from config import Config
 from agent import AutoSchemaAuditorAgent
 from system_prompt import MASTER_SYSTEM_PROMPT
@@ -99,14 +105,19 @@ def main():
         run_audit(args.file, args.output, mock=args.mock, verbose=args.verbose)
     elif args.command == "demo":
         print("[*] Running End-to-End Auditor Demonstration on Sample Inputs...\n")
-        sample_sql = "sample_inputs/ecommerce_schema.sql"
-        sample_api = "sample_inputs/order_controller.ts"
+        sample_sql = BASE_DIR.parent / "sample_inputs" / "ecommerce_schema.sql"
+        if not sample_sql.exists():
+            sample_sql = BASE_DIR / "sample_inputs" / "ecommerce_schema.sql"
+
+        sample_api = BASE_DIR.parent / "sample_inputs" / "order_controller.ts"
+        if not sample_api.exists():
+            sample_api = BASE_DIR / "sample_inputs" / "order_controller.ts"
 
         print("\n--- TEST CASE 1: E-Commerce Database Schema ---")
-        run_audit(sample_sql, mock=True)
+        run_audit(str(sample_sql), mock=True)
 
         print("\n--- TEST CASE 2: Order Controller API ---")
-        run_audit(sample_api, mock=True)
+        run_audit(str(sample_api), mock=True)
     elif args.command == "prompt":
         print(MASTER_SYSTEM_PROMPT)
     else:
